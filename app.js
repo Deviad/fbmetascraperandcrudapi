@@ -23,9 +23,11 @@ app.get('/api/richlinks', function (req, res) {
         });
 
 
-    responseStream.subscribe(function(response) {
-       res.json(response);
-    });
+    responseStream.subscribe(
+        function(response) {res.json(response); },
+        function (err) { console.log('Error: %s', err); },
+        function () { console.log('Completed'); }
+    );
 
 });
 
