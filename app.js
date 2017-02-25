@@ -2,24 +2,26 @@ var express = require('express');
 
 var Scraper = require('./scraper.js');
 
-var Rx = require('rxjs/Rx.js');
-
 var scraper = new Scraper();
+
+var Rx = require('rxjs/Rx.js');
 
 var app = express();
 
-var scrapedData = scraper.scrape('http://www.repubblica.it');
 
-var requestStream = Rx.Observable.of(scrapedData);
+app.get('/api/richlinks', function (req, res) {
 
-var responseStream = requestStream
-    .flatMap(function(scrapedData) {
-        return Rx.Observable.fromPromise((scrapedData));
-    });
+    var url = req.param('url');
 
+    var scrapedData = scraper.scrape(url);
 
+    var requestStream = Rx.Observable.of(scrapedData);
 
-app.get('/', function (req, res) {
+    var responseStream = requestStream
+        .flatMap(function(scrapedData) {
+            return Rx.Observable.fromPromise((scrapedData));
+        });
+
 
     responseStream.subscribe(function(response) {
        res.json(response);
