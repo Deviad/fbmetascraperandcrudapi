@@ -15,25 +15,26 @@ app.get('/api/richlinks', function (req, res) {
 
     var scrapedData = scraper.scrape(url);
 
-    var requestStream = Rx.Observable.of(scrapedData);
+    var source = Rx.Observable.from(scrapedData);
 
-    var responseStream = requestStream
-        .flatMap(function(scrapedData) {
-            return Rx.Observable.fromPromise((scrapedData));
-        });
+    var published = source.publish();
 
+    published.subscribe(createObserver('SourceA'));
 
-    responseStream.subscribe(
-        function(response) {res.json(response); },
-        function (err) { console.log('Error: %s', err); },
-        function () { console.log('Completed'); }
-    );
+    var connection = published.connect();
 
+    function createObserver(tag){
+        return Rx.Observer.create(
+            function(response) {res.json(response); },
+            function (err) { console.log('Error: %s', err); },
+            function () { console.log('Completed'); }
+        );
+    }
 });
 
 
 app.listen(5100, function () {
-  console.log('Example app listening on port 5100!');
+    console.log('Example app listening on port 5100!');
 });
 
 module.exports = app;

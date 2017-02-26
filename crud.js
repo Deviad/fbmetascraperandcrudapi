@@ -17,13 +17,9 @@ var crud  = function () {
     connection.connect();
 
 
+    connection.query('INSERT INTO Discussion SET message = ?, parent_id = ?, the_ = ? WHERE id = ?', [msg, parentId, theEvent, user, 0, 0], function (error, results, fields) {
+        if (error) throw error;
 
-
-
-    connection.query("SELECT 1 + 1 AS solution", function (err, rows, fields) {
-        if (err) throw err;
-
-        console.log('The solution is: ', rows[0].solution);
     });
 
     connection.end();
