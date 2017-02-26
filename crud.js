@@ -10,14 +10,14 @@ var crud  = function () {
 
     var connection = mysql.createConnection({
         host: 'localhost',
-        user: 'alumni',
-        password: '8YPHFxmsWz2QY28H'
+        user: 'whatever',
+        password: 'XXXXXXXXXXXXXXXXXXXXXX'
     });
 
     connection.connect();
 
 
-    connection.query('INSERT INTO Discussion SET message = ?, parent_id = ?, the_ = ? WHERE id = ?', [msg, parentId, theEvent, user, 0, 0], function (error, results, fields) {
+    connection.query('INSERT INTO Users SET example1 = ?, example2 = ?, example3 = ? WHERE id = ?', [msg, parentId, theEvent, user, 0, 0], function (error, results, fields) {
         if (error) throw error;
 
     });
