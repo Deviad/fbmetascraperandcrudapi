@@ -25,8 +25,8 @@ app.get('/api/richlinks', function (req, res) {
 
     published.subscribe(createObserver());
 
-    //disposable object that I can use later own, more for my own convenience, to remember
-    //that this is the connection. Otherwise I could just simply use published.unsubscribe();
+    //disposable object that I can use later on, more for my own convenience so that I can even terminate the connection
+    //when I do not need it anymore.
 
     var connection = published.connect();
 
